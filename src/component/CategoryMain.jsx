@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     FaArrowRight,
     FaCircleArrowLeft,
@@ -13,6 +13,23 @@ import { all } from 'axios';
 const CategoryMain = () => {
 
   const allCar = useSelector((state) => state.car)
+  const [categories, setCategories] = useState([]);
+
+  console.log(allCar.allCar);
+  
+  
+
+  useEffect(() => {
+   
+      const uniqueCategory = [...new Set(allCar?.allCar?.map((car) => car.category))]
+      setCategories(uniqueCategory);    
+    
+  }, [allCar]);
+
+  
+  
+
+  
  
  
  const getCategoryByCar = (category) =>{
@@ -27,23 +44,27 @@ const CategoryMain = () => {
  
  
 
+ 
+ 
+
 
  
   return (
     <>
-      <div className="bg-black h-screen w-full p-10 pb-0 sm:p-28">
+      <div className="bg-black min-h-screen w-full p-10 pb-0 sm:p-28">
    <CategoryCardHeader />
+  
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-1 mx-auto max-w-[1200px]  md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
     
-            <div className="grid grid-cols-1 w-full h-fit gap-3 sm:grid-cols-1   md:grid-cols-3 lg:grid-4 xl:grid-cols-4">
-         {/* <h2 className='text-white'>SUV:{suvCar?.length}</h2>
-         <h2 className='text-white'>Sedans: {sedanCar?.length}</h2>
-         <h2 className='text-white'>Hatchbacks: {jeepCar?.length}</h2> */}
 
-        
-         <CategoryCards suvCar={suvCar} />
-         <CategoryCards sedanCar={sedanCar} />
+        {
+           categories?.map((category) => <CategoryCards category={category} count={getCategoryByCar(category)?.length}/>)
+        }
+    
+       
         
             </div>
+         
           </div>
     </>
   )

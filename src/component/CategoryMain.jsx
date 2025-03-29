@@ -15,7 +15,7 @@ const CategoryMain = () => {
   const allCar = useSelector((state) => state.car)
   const [categories, setCategories] = useState([]);
 
-  console.log(allCar.allCar);
+ 
   
   
 

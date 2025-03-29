@@ -4,11 +4,30 @@ import { CgMenuGridR } from "react-icons/cg";
 import { IoMdClose } from "react-icons/io";
 import logoimge from '../assets/logo-w1.svg';
 import menuimge from '../assets/menu.svg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { FaRegUserCircle } from "react-icons/fa";
+import { logOut } from '../features/auth/AuthSlice';
+import {getAllRentalCar} from '../features/rental/RentalSlice'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const {user} = useSelector((state) => state.auth)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+ 
+
   const [view,setview]=useState(false)
+
+  const handleLogout = () => {
+    dispatch(logOut())
+    navigate("/")
+  }
+
+  const handleRental = () => {
+   dispatch(getAllRentalCar())
+   
+  }
  
 
   return (
@@ -44,10 +63,25 @@ const Navbar = () => {
       </div>
       
       {/* Desktop Buttons */}
-      <div className='hidden md:flex space-x-2 sm:space-x-4'>
-      <Link to={'/register'} className='px-3 sm:px-4 py-2 rounded-lg hover:bg-green-400 text-sm sm:text-base'>Register</Link>
-        <Link to={'/login'} className='px-3 sm:px-4 py-2 rounded-lg hover:bg-green-400 text-sm sm:text-base'>Login</Link>
-        <Link to={'/admin'} className='px-3  sm:px-4 py-2 bg-white text-black rounded-lg hover:bg-green-400 text-sm sm:text-base'>Admin</Link>
+      <div className='hidden md:flex space-x-2 sm:space-x-4 items-center'>
+        {
+          !user ?    (<Link to={'/login'} className='px-3 sm:px-4 py-2 rounded-lg hover:bg-green-400 text-sm sm:text-base'>Login</Link>) 
+          : ( <>
+              <div>
+              <button onClick={handleRental}> <Link to={"/user"}><FaRegUserCircle className='text-3xl'/></Link></button>
+              </div>
+              <Link  onClick={handleLogout} className='px-3  sm:px-4 py-2 bg-white text-black rounded-lg hover:bg-green-400 text-sm sm:text-base'>Logout</Link>
+            
+              </>
+          
+           )
+        }
+      {/* <Link to={'/register'} className='px-3 sm:px-4 py-2 rounded-lg hover:bg-green-400 text-sm sm:text-base'>Register</Link> */}
+      
+        <Link to={'/login'} className='px-3 sm:px-4 py-2 rounded-lg hover:bg-green-400 w-full text-sm sm:text-base'>theme</Link>
+        {/* <Link to={'/user'} className='px-3  sm:px-4 py-2 bg-white text-black rounded-lg hover:bg-green-400 text-sm sm:text-base'>User</Link> */}
+       
+        {/* <Link to={'/admin'} className='px-3  sm:px-4 py-2 bg-white text-black rounded-lg hover:bg-green-400 text-sm sm:text-base'>Admin</Link> */}
         <button onClick={()=>setview(view ? false : true)} className=' bg-green-400 lg:hidden rounded-xl ' ><img className='   py-3 bg-green-400  rounded-xl px-3 hover:bg-white  transition-all duration-300' src={menuimge} alt="" /></button>
 
         
@@ -73,9 +107,24 @@ const Navbar = () => {
             ))}
           </ul>
           <div className=' w-full'>
-          <Link to={'/register'} className='px-3 sm:px-4 py-2 rounded-lg hover:bg-green-400 text-sm sm:text-base'>Register</Link>
-          <Link to={'/login'} className='px-3 sm:px-4 py-2 rounded-lg hover:bg-green-400 w-full text-sm sm:text-base'>Login</Link>
-          <Link to={'/admin'} className='px-3  sm:px-4 py-2 bg-white text-black rounded-lg hover:bg-green-400 text-sm sm:text-base'>Admin</Link>
+          {
+          !user ?    (<Link to={'/login'} className='px-3 sm:px-4 py-2 rounded-lg hover:bg-green-400 text-sm sm:text-base'>Login</Link>) 
+          : ( <>
+              <div>
+              <button onClick={handleRental}> <Link to={"/user"}><FaRegUserCircle className='text-3xl'/></Link></button>
+              </div>
+              <Link onClick={handleLogout} className='px-3  sm:px-4 py-2 bg-white text-black rounded-lg hover:bg-green-400 text-sm sm:text-base'>Logout</Link>
+            
+              </>
+          
+           )
+        }
+          {/* <Link to={'/register'} className='px-3 sm:px-4 py-2 rounded-lg hover:bg-green-400 text-sm sm:text-base'>Register</Link> */}
+         
+          <Link to={'/login'} className='px-3 sm:px-4 py-2 rounded-lg hover:bg-green-400 w-full text-sm sm:text-base'>theme</Link>
+          {/* <Link to={'/user'} className='px-3  sm:px-4 py-2 bg-white text-black rounded-lg hover:bg-green-400 text-sm sm:text-base'>User</Link> */}
+       
+          {/* <Link to={'/admin'} className='px-3  sm:px-4 py-2 bg-white text-black rounded-lg hover:bg-green-400 text-sm sm:text-base'>Admin</Link> */}
 
           <button className='px-3 mt-1 sm:px-4 py-2 bg-white text-black rounded-lg hover:bg-green-400 w-full text-sm sm:text-base'>theme</button>
 

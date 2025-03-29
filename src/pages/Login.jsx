@@ -1,12 +1,60 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { IoLogoFacebook } from "react-icons/io5";
 import { BsApple } from "react-icons/bs";
 import { FaUser } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../features/auth/AuthSlice";
+import Skeleton from 'react-loading-skeleton'
+
 
 const Login = () => {
+
+  const {user, isLoading, isError, message} = useSelector(state => state.auth)
  
+  
+
+const dispatch = useDispatch()
+const navigate = useNavigate()
+
+
+  const [loginData, setLoginData] = useState({
+     email : "",
+     password : ""
+  })
+
+  const {email, password} = loginData
+
+  const handleChange = (e) => {
+    
+    setLoginData({
+      ...loginData,
+      [e.target.name] : e.target.value
+    })
+  }
+ 
+  const handleSubmit = (e) => {
+     e.preventDefault()
+     dispatch(loginUser(loginData))
+
+  }
+
+  useEffect(()=> {
+if(user){
+  navigate('/')
+}
+if(isError && message){
+  console.log("Erro message is Found  in login");
+  
+}
+
+
+  }, [user, isError, message])
+
+  if(isLoading){
+    return  Array.from({ length: 1 }).map((_, index) => <Skeleton key={index} height={300} baseColor="#202020" highlightColor="#444" />)
+  }
 
   return (
     <div className="bg-gray-900 flex items-center justify-center min-h-screen">
@@ -20,14 +68,17 @@ const Login = () => {
           Welcome back
         </h1>
 
-        <form  className="flex flex-col mt-4">
+        <form  className="flex flex-col mt-4" onSubmit={handleSubmit}>
           <div className="relative">
             <input
               className="border border-gray-400 p-3 rounded-md my-2 bg-gray-700 text-gray-400 outline-none w-full pl-10"
               type="email"
-              placeholder="Email / Username"
+              placeholder="Email"
               required
               name="email"
+              onChange={handleChange}
+              autocomplete=""
+              value={email}
               
             />
             <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
@@ -40,7 +91,10 @@ const Login = () => {
               type="password"
               placeholder="Password"
               required
+              autocomplete="current-password"
               name="password"
+              onChange={handleChange}
+              value={password}
               
             />
             <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">

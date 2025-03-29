@@ -7,28 +7,43 @@ import "react-datepicker/dist/react-datepicker.css";
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getSingleCar } from "../features/AllCar/carSlice";
+import {  getSingleCar } from "../features/AllCar/carSlice";
 import { BsFillFuelPumpFill, BsFuelPumpDiesel } from "react-icons/bs";
 import { FaCircleArrowLeft, FaCircleArrowRight, FaGear } from "react-icons/fa6";
 import { IoLocationSharp, IoSpeedometerSharp } from "react-icons/io5";
 import { MdAirlineSeatReclineNormal } from "react-icons/md";
+import {createRentalCar, getAllRentalCar} from '../features/rental/RentalSlice'
 
 const CarDetails = () => {
-  const [pickupDate, setPickupDate] = useState(new Date());
+  let [pickupDate, setPickupDate] = useState(new Date());
   const [dropDate, setDropDate] = useState(new Date());
 
+  let pickupDate1 = pickupDate.toLocaleDateString('en-US');
+  let dropDate1 = dropDate.toLocaleDateString('en-US');
+  
+ 
+  
   const {carid} = useParams()
+ 
+  
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    disptach(createRentalCar({dropDate1, pickupDate1,carid}))
+  }
+  
+
+  
   const disptach = useDispatch()
   const {singleCar} = useSelector((state)=> state.car)
 
  
-  
-  
-
   useEffect(()=>{
    disptach(getSingleCar(carid))
 
   },[carid])
+  
   
   return (
     <div className="bg-[#171717]">
@@ -105,9 +120,20 @@ const CarDetails = () => {
               <h3 className="text-white font-bold text-xl">Rent This Vehicle</h3>
             </div>
             {/* --------------------------------------- */}
+           <form onSubmit={handleSubmit}>
+            <div className="text-gray-400 text-[15px]  mt-10 px-4 w-full">
+                <h5 className="text-xl">DropOff Up Date & Time</h5>
+                <div className="">
+                  <DatePicker
+                    className="text-white  border rounded-md p-[5px] border-[rgba(255,255,255,0.1)] "
+                    selected={dropDate}
+                    onChange={(date) => setDropDate(date)}
+                  />
+                </div>
+            </div>
 
             <div className="text-gray-400 text-[15px]  mt-10 px-4 w-full">
-                <h5 className="text-xl">Pick Up Date & Time</h5>
+                <h5 className="text-xl">Pick Up Date & Time </h5>
                 <div className="">
                   <DatePicker
                     className="text-white  border rounded-md p-[5px] border-[rgba(255,255,255,0.1)] "
@@ -117,47 +143,23 @@ const CarDetails = () => {
                 </div>
             </div>
 
-            <div className="text-gray-400 text-[15px]  mt-10 px-4 w-full">
-                <h5 className="text-xl">  DropOff Up Date & Time</h5>
-                <div className="">
-                  <DatePicker
-                    className="text-white  border rounded-md p-[5px] border-[rgba(255,255,255,0.1)] "
-                    selected={pickupDate}
-                    onChange={(date) => setPickupDate(date)}
-                  />
-                </div>
-            </div>
+            <div className="text-white  text-xl font-bold mt-10  ">
+          <button  className=" rounded-md  bg-[#82B440] py-3 px-10 hover:bg-green-600">
+            Book now
+          </button>
+          </div>
+            </form> 
 
-            <div className="flex justify-center mt-10">
-              <hr className="bg-gray-400 h-0.5 w-180"/>
-            </div>
+           
 
               {/* ------------------------------------------- */}
-              <div className="text-white flex justify-between px-4">
-                <p>Subtotal</p>
-                <p>$39</p>
-              </div>
-
-              <div className="text-white  flex justify-between px-4">
-                <p>Taxes</p>
-                <p>$0</p>
-              </div>
-
-              <div className="text-white flex justify-between px-4">
-                <p>Sale Discount</p>
-                <p>$0</p>
-              </div>
-
-              <div className="text-white  flex justify-between px-4">
-                <p>Total</p>
-                <p>$39</p>
-              </div>
-
-              <div className="text-white  text-xl font-bold mt-10">
-                <button className="w-full rounded-md  bg-[#82B440] py-3">Book now</button>
-              </div>
+             
 
               {/* ----subtotal----------------------------------- */}
+
+          
+          
+     
           </div>
 
           

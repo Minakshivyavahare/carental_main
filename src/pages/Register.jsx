@@ -1,13 +1,66 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { IoLogoFacebook } from "react-icons/io5";
 import { BsApple } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../features/auth/AuthSlice";
+import Skeleton from 'react-loading-skeleton'
 
 
 const Register = () => {
+
+  const {user, isLoading, isError , message} = useSelector(state => state.auth)
+  // console.log(user);
+  
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+
+
+
+  const [formData, setFormData] = useState({
+    name : "",
+    email : "",
+    password : "",
+    phone : ""
+  })
+
+  const {name, email, password, phone} = formData
+
+  const handleChange =(e) => {
+    setFormData({
+      ...formData,
+      [e.target.name] : e.target.value
+
+    })
+  }
+
+  const handleSubmit = (e) =>{
+     e.preventDefault()
+     dispatch(registerUser(formData))
+
+
+  }
+
+  useEffect(()=> {
+if(user){
+  navigate("/")
+}
+if(isError && message) {
+  console.log("Error is found in Register");
+  
+}
+   
+
+  }, [isError, message, user])
+
+  if(isLoading){
+    return Array.from({ length: 1 }).map((_, index) => <Skeleton key={index} height={300} baseColor="#202020" highlightColor="#444" />)
+  }
  
 
   return (
@@ -21,14 +74,16 @@ const Register = () => {
         <h2 className="text-2xl font-bold text-center mb-4">
           Create an Account
         </h2>
-        <form>
+        <form  onSubmit={handleSubmit}>
           <div className="relative mb-4">
             <FaUser className="absolute top-3 left-3 text-gray-400" />
             <input
               className="pl-10 w-full p-2 rounded bg-gray-700 text-white border border-gray-700-1 focus:outline-none"
               type="text"
-              placeholder="Email / Username"
+              placeholder=" Username"
               name="name"
+              onChange={handleChange}
+              value = {name}
               
               required
             />
@@ -38,8 +93,10 @@ const Register = () => {
             <input
               className="pl-10 w-full p-2 rounded bg-gray-700 text-white border border-gray-700-1 focus:outline-none"
               type="email"
-              placeholder="Email / Username"
+              placeholder="Email"
               name="email"
+              onChange={handleChange}
+              value = {email}
               
               required
             />
@@ -49,8 +106,10 @@ const Register = () => {
             <input
               className="pl-10 w-full p-2 rounded bg-gray-700 text-white border border-gray-700-1 focus:outline-none"
               type="password"
-              placeholder="********"
+              placeholder="Password"
               name="password"
+              onChange={handleChange}
+              value = {password}
              
               required
             />
@@ -59,9 +118,11 @@ const Register = () => {
             <FaLock className="absolute top-3 left-3 text-gray-400" />
             <input
               className="pl-10 w-full p-2 rounded bg-gray-700 text-white border border-gray-700-1 focus:outline-none"
-              type="password"
-              placeholder="********"
-              name="password2"
+              type="number"
+              placeholder="Phone Number"
+              name="phone"
+              onChange={handleChange}
+              value = {phone}
              
               required
             />

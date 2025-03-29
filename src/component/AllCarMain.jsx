@@ -9,7 +9,7 @@ const AllCarMain = () => {
   const dispatch = useDispatch();
   const {isLoading, isError,allCar} = useSelector((state) => state.car)
 
-
+   
   
   
   useEffect(() =>{

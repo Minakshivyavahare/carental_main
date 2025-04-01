@@ -68,7 +68,7 @@ const Navbar = () => {
           !user ?    (<Link to={'/login'} className='px-3 sm:px-4 py-2 rounded-lg hover:bg-green-400 text-sm sm:text-base'>Login</Link>) 
           : ( <>
               <div>
-              <button onClick={handleRental}> <Link to={"/user"}><FaRegUserCircle className='text-3xl'/></Link></button>
+              <button onClick={handleRental}> <Link to={"/user"}><FaRegUserCircle className='text-3xl hover:text-green-400'/></Link></button>
               </div>
               <Link  onClick={handleLogout} className='px-3  sm:px-4 py-2 bg-white text-black rounded-lg hover:bg-green-400 text-sm sm:text-base'>Logout</Link>
             

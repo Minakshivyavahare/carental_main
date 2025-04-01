@@ -19,14 +19,12 @@ const Sidebar = () => {
     { name: "Crypto", icon: <FaBitcoin /> },
     { name: "NFT", icon: null },
     { name: "CRM", icon: <FaUser /> },
-    // Add more items with icons as needed
+   
   ];
 
   return (
     <div className=" h-full  bg-gray-900 text-white p-4">
-      <div className="text-2xl font-bold text-teal-400 mb-8 flex items-center">
-        <span className="mr-2">🌌</span> SciFi
-      </div>
+     
       <nav>
         {navItems.map((item, index) => (
           <div

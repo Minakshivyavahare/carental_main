@@ -15,17 +15,7 @@ const Header = () => {
           />
           <span className="absolute left-2 top-2 text-gray-400">🔍</span>
         </div>
-        <div className="flex space-x-2">
-          <div className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center">
-            <FiBell className="text-gray-400 text-xl hover:text-teal-400" />
-          </div>
-          <div className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center">
-            <FaSun className="text-gray-400 text-xl hover:text-teal-400" />
-          </div>
-          <div className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center">
-            <FiUser className="text-gray-400 text-xl hover:text-teal-400" />
-          </div>
-        </div>
+      
       </div>
     </div>
   );

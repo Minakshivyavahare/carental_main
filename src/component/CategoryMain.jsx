@@ -19,12 +19,12 @@ const CategoryMain = () => {
   
   
 
-  useEffect(() => {
+  // useEffect(() => {
    
-      const uniqueCategory = [...new Set(allCar?.allCar?.map((car) => car.category))]
-      setCategories(uniqueCategory);    
+  //     const uniqueCategory = [...new Set(allCar?.allCar?.map((car) => car.category))]
+  //     setCategories(uniqueCategory);    
     
-  }, [allCar]);
+  // }, [allCar]);
 
   
   
@@ -34,7 +34,7 @@ const CategoryMain = () => {
  
  const getCategoryByCar = (category) =>{
 
-  return allCar?.allCar?.filter((car) => car.category.toLowerCase() === category.toLowerCase())
+  // return allCar?.allCar?.filter((car) => car.category.toLowerCase() === category.toLowerCase())
  }
  
  const suvCar = getCategoryByCar('suv')

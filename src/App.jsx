@@ -10,6 +10,7 @@ import CarDetails from './pages/CarDetails'
 import UserDasboard from './pages/UserDashboard'
  import PrivateComponent from './component/PrivateComponent'
 import UserAddCar from './pages/UserAddCar'
+import SearchCar from './pages/SearchCar'
 
  
 
@@ -31,6 +32,7 @@ const App = () => {
         <Route path='/cardetail/:carid' element={ <CarDetails/>} />
         <Route path="/user" element={<UserDasboard/>} />
         <Route path="/useraddcar" element={<UserAddCar/>} />
+        <Route path="/search/:carQuery" element={<SearchCar/>} />
         
         <Route path="" element={<PrivateComponent />}>
      

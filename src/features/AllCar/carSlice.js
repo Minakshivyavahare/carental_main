@@ -4,8 +4,9 @@ import carService from "./carService";
 const carSlice = createSlice({
     name: 'car',
     initialState:{
-        allCar: null,
+        allCar: { cars: [], pagination:{} },
         singleCar:{},
+        searchCar: [],
         isLoading:false,
         isSuccess:false,
         isError:false,
@@ -24,7 +25,14 @@ const carSlice = createSlice({
             state.isLoading = false,
             state.isSuccess = true,
             state.isError = false,
-            state.allCar = action.payload
+
+           
+            
+            state.allCar.cars = action.payload.cars
+            state.allCar.pagination = action.payload.pagination
+          
+           
+            
         })
         .addCase(getAllCar.rejected, (state,action)=>{
             state.isLoading = false,
@@ -49,6 +57,23 @@ const carSlice = createSlice({
             state.isError = true
             
         })
+        .addCase(getSearchCar.pending, (state,action) =>{
+            state.isLoading = true,
+            state.isSuccess = false,
+            state.isError = false
+        })
+        .addCase(getSearchCar.fulfilled, (state,action) =>{
+            state.isLoading = false,
+            state.isSuccess = true,
+            state.isError = false,
+            state. searchCar = action.payload
+        })
+        .addCase(getSearchCar.rejected, (state,action) =>{
+            state.isLoading = false,
+            state.isSuccess = false,
+            state.isError = true
+            
+        })
 
     }
 })
@@ -61,9 +86,9 @@ export default carSlice.reducer
 
 //getAllCar
 
-export const getAllCar = createAsyncThunk("GET/ALLCAR", async()=>{
+export const getAllCar = createAsyncThunk("GET/ALLCAR", async(page=1)=>{
     try {
-        return await carService.fetchAllCar()   
+        return await carService.fetchAllCar(page)   
     } catch (error) {
         console.log(error);
         
@@ -78,6 +103,18 @@ export const getSingleCar = createAsyncThunk("GET/SINGLECAR", async(id)=>{
        
         
         return await carService.fetchSingleCar(id)  
+    } catch (error) {
+        console.log(error);
+        
+    }
+})
+
+
+//get search car
+
+export const getSearchCar = createAsyncThunk("GET/SEARCHCAR", async(searchTerm)=>{
+    try {
+        return await carService.searchCar(searchTerm) 
     } catch (error) {
         console.log(error);
         

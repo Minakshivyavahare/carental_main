@@ -12,7 +12,7 @@ const Dashboard = () => {
  
  
   return (
-    <div className="w-full  sm:w-full md:flex h-full bg-gray-100 pt-20">
+    <div className="w-full  sm:w-full md:flex h-full bg-[#101828] text-white pt-20">
       {/* Sidebar */}
       <div className="w-full flex p-4 shadow-md items-center justify-between md:justify-start md:flex-col md:w-1/4 md:p-4 sm:flex sm:flex-row sm:w-full">
         <div className=" text-centers sm:text-center md:text-center md:mb-3 ">
@@ -26,7 +26,7 @@ const Dashboard = () => {
               John Smith
             </h2>
 
-            <p className="text-[7px] text-center md:text-sm text-gray-500  md:block">
+            <p className="text-[7px] text-center md:text-sm text-white  md:block">
               CEO, Oxish
             </p>
           </div>
@@ -34,7 +34,7 @@ const Dashboard = () => {
 
         {/* menu button for sm size */}
 
-        <Menu as="div" className="relative inline-block text-left md:hidden">
+        <Menu as="div" className="relative inline-block text-left md:hidden ">
           <div className="">
             <MenuButton>
               <TiThMenu className=" block md:hidden  w-7 h-full " />
@@ -48,7 +48,7 @@ const Dashboard = () => {
             <MenuItem>
               <a
                 href="#"
-                className="block px-4 py-2 mb-2 shadow-lg rounded-sm text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
+                className="block  px-4 py-2 mb-2 shadow-lg rounded-sm text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
               >
                 Dashboard
               </a>
@@ -139,32 +139,32 @@ const Dashboard = () => {
         <nav className="md:mt-5 md:justify-evenly hidden md:block w-full flex-row sm:items-center sm:w-full">
           <a
             href="#"
-            className="sm:w-auto block text-center md:text-start md:text-blue-600 md:h-9 md:justify-center md:mb-3 font-semibold bg-blue-600 text-white md:text-lg md:bg-white md:pl-2 shadow-lg md:shadow-lg  md:rounded-sm"
+            className="sm:w-auto block text-center md:text-start md:text-blue-600 md:h-9 md:justify-center md:mb-3 font-semibold bg-[#1E2939] text-white md:text-lg  md:pl-2 shadow-lg md:shadow-lg  md:rounded-sm"
           >
             Dashboard
           </a>
           <Link
             to={"/useraddcar"}
-            className="sm:w-auto block text-center md:text-start md:text-blue-600 md:h-9 md:mb-3 font-semibold bg-blue-600 text-white  text-[13px] md:text-lg md:bg-white md:pl-2 shadow-lg md:shadow-lg rounded-lg md:rounded-ss-none"
+            className="sm:w-auto block text-center md:text-start md:text-blue-600 md:h-9 md:mb-3 font-semibold bg-[#1E2939] text-white  text-[13px] md:text-lg  md:pl-2 shadow-lg md:shadow-lg rounded-lg md:rounded-ss-none"
           >
             Add Cars for rentals
           </Link>
           <a
             href="#"
-            className="sm:w-auto block text-center md:text-start md:text-blue-600 md:h-9 md:justify-center md:mb-3 font-semibold bg-blue-600 text-white md:text-lg md:bg-white md:pl-2 shadow-lg md:shadow-lg  md:rounded-sm"
+            className="sm:w-auto block text-center md:text-start md:text-blue-600 md:h-9 md:justify-center md:mb-3 font-semibold bg-[#1E2939]  text-white md:text-lg md:pl-2 shadow-lg md:shadow-lg  md:rounded-sm"
           >
             Transactions
           </a>
           <a
             href="#"
-            className="sm:w-auto block text-center md:text-start md:text-blue-600 md:h-9 md:justify-center md:mb-3 font-semibold bg-blue-600 text-white md:text-lg md:bg-white md:pl-2 shadow-lg md:shadow-lg  md:rounded-sm"
+            className="sm:w-auto block text-center md:text-start md:text-blue-600 md:h-9 md:justify-center md:mb-3 font-semibold text-white md:text-lg bg-[#1E2939] md:pl-2 shadow-lg md:shadow-lg  md:rounded-sm"
           >
             Fuel Type
           </a>
 
           <a
             href="#"
-            className="sm:w-auto block text-center md:text-start md:text-blue-600 md:h-9 md:justify-center md:mb-3 font-semibold bg-blue-600 text-white md:text-lg md:bg-white md:pl-2 shadow-lg md:shadow-lg  md:rounded-sm"
+            className="sm:w-auto block text-center md:text-start md:text-blue-600 md:h-9 md:justify-center md:mb-3 font-semibold  text-white md:text-lg bg-[#1E2939] md:pl-2 shadow-lg md:shadow-lg  md:rounded-sm"
           >
             Car-Brands
           </a>
@@ -177,7 +177,7 @@ const Dashboard = () => {
           <h1 className="text-[15px] sm:text-[25px] text-center text-2xl font-bold md:text-start md:text-5xl font-serif">
             Dashboard
           </h1>
-          <p className="text-[10px] text-sm text-center text-gray-500 md:text-start md:text-xl">
+          <p className="text-[10px] text-sm text-center text-white md:text-start md:text-xl">
             18 March 2025
           </p>
         </div>
@@ -185,15 +185,15 @@ const Dashboard = () => {
         {/* Stats Cards */}
         <div className="flex">
           <div className="grid grid-cols-1 sm:mt-5 sm:grid-cols-2 md:grid-cols-3 gap-4 md:mt-10 md:w-full">
-            <div className="bg-white text-start p-6 rounded-lg shadow-md ">
+            <div className="bg-[#1E2939] text-start p-6 rounded-lg shadow-md ">
               <p className="text-gray-500 md:text-2xl">Total Cars</p>
               <h2 className=" font-bold md:text-2xl md:mt-2">10,724</h2>
-              <p className="text-sm text-gray-500 md:mt-2 md:text-[18px]">
+              <p className="text-sm text-green-500 md:mt-2 md:text-[18px]">
                 All running & completed Cars
               </p>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-md">
+            <div className="bg-[#1E2939] p-6 rounded-lg shadow-md">
               <p className="text-gray-500 md:text-2xl">All Booking Car</p>
               <h2 className="text-2xl font-bold  md:mt-2">9,801</h2>
               <p className="text-sm text-blue-500 md:mt-2 md:text-[18px]  ">
@@ -201,7 +201,7 @@ const Dashboard = () => {
               </p>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-md ">
+            <div className="bg-[#1E2939]  p-6 rounded-lg shadow-md ">
               <p className="text-gray-500 md:text-2xl">Running Cars</p>
               <h2 className="text-2xl font-bold md:mt-2">923</h2>
               <p className="text-sm text-blue-500 md:mt-2 md:text-[18px]">
@@ -216,6 +216,7 @@ const Dashboard = () => {
         {
           allRentals?.allRental?.map((car) => <AllRentalCard car={car} key={car._id}/>)
         }
+        
       
         </div>
       </div>

@@ -16,7 +16,7 @@ import AdminUsertable from './pages/AdminUsertable'
 import UserRentalDetail from './pages/UserRentalDetail'
 import AddNewrental from './pages/AddNewrental'
 import Adminallrental5 from './component/admin_component/Adminallrental5'
- import { MainService } from './component/service/MainService'
+
  import { Link } from 'react-router-dom';
 
  
@@ -49,7 +49,7 @@ const App = () => {
         <Route path="/userrentaldetail" element={<UserRentalDetail/>} />
         <Route path="/adminaddnewcar" element={<AddNewrental/>} />
         <Route path="/Adminallrental5" element={<Adminallrental5/>} />
-        <Route path="/service" element={<MainService/>} />
+      
      
   
       

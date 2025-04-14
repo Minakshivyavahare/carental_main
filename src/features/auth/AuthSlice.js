@@ -55,7 +55,7 @@ extraReducers : (builder)=> {
         state.isSuccess = true,
         state.isError = false
         state.user = action.payload
-        console.log(action.payload);
+       
         
     })
     .addCase(loginUser.rejected , (state, action)=> {

@@ -7,12 +7,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../features/auth/AuthSlice";
 import Skeleton from 'react-loading-skeleton'
+import Loader from "../component/Loader";
 
 
 const Login = () => {
 
   const {user, isLoading, isError, message} = useSelector(state => state.auth)
  
+
+   useEffect(()=>{
+      window.scrollTo(0,0)
+      },[])
   
 
 const dispatch = useDispatch()
@@ -53,11 +58,16 @@ if(isError && message){
   }, [user, isError, message])
 
   if(isLoading){
-    return  Array.from({ length: 1 }).map((_, index) => <Skeleton key={index} height={300} baseColor="#202020" highlightColor="#444" />)
+    return (
+      <div className="bg-gray-900 flex items-center justify-center min-h-screen py-35">
+    <Loader />
+    </div>
+    )
+    
   }
 
   return (
-    <div className="bg-gray-900 flex items-center justify-center min-h-screen">
+    <div className="bg-gray-900 flex items-center justify-center min-h-screen py-35">
       <div className="bg-gray-800  p-8 rounded-2xl shadow-lg w-96 text-white">
         <div className="flex justify-center">
           <button className="bg-green-500 text-white px-4 py-1 rounded-full text-sm">

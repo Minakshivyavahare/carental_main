@@ -5,7 +5,7 @@ import { CiSearch } from "react-icons/ci";
 import { FaUserAlt } from "react-icons/fa";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {  getSingleCar } from "../features/AllCar/carSlice";
 import { BsFillFuelPumpFill, BsFuelPumpDiesel } from "react-icons/bs";
@@ -13,29 +13,40 @@ import { FaCircleArrowLeft, FaCircleArrowRight, FaGear } from "react-icons/fa6";
 import { IoLocationSharp, IoSpeedometerSharp } from "react-icons/io5";
 import { MdAirlineSeatReclineNormal } from "react-icons/md";
 import {createRentalCar, getAllRentalCar} from '../features/rental/RentalSlice'
+import ReviewSectionUI from "../component/Review";
+
 
 const CarDetails = () => {
   let [pickupDate, setPickupDate] = useState(new Date());
   const [dropDate, setDropDate] = useState(new Date());
+  const disptach = useDispatch()
 
   let pickupDate1 = pickupDate.toLocaleDateString('en-US');
   let dropDate1 = dropDate.toLocaleDateString('en-US');
-  
- 
-  
   const {carid} = useParams()
+  
+  
+  useEffect(()=>{
+    window.scrollTo(0,0)
+    },[])
+  
  
   
 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    disptach(createRentalCar({dropDate1, pickupDate1,carid}))
+    
+    
+     disptach(createRentalCar({dropDate1, pickupDate1,carid}))
+   
+
   }
+  
   
 
   
-  const disptach = useDispatch()
+ 
   const {singleCar} = useSelector((state)=> state.car)
 
  
@@ -46,7 +57,7 @@ const CarDetails = () => {
   
   
   return (
-    <div className="bg-[#171717]">
+    <div className="bg-[#171717] min-h-screen pt-40">
       <div className="img-section px-30 pt-7 my-15 flex justify-center">
         <img
           className="w-[900px] h-100 rounded-md"
@@ -120,7 +131,7 @@ const CarDetails = () => {
               <h3 className="text-white font-bold text-xl">Rent This Vehicle</h3>
             </div>
             {/* --------------------------------------- */}
-           <form onSubmit={handleSubmit}>
+           <form onSubmit={(e) =>handleSubmit(e)}>
             <div className="text-gray-400 text-[15px]  mt-10 px-4 w-full">
                 <h5 className="text-xl">DropOff Up Date & Time</h5>
                 <div className="">
@@ -144,11 +155,16 @@ const CarDetails = () => {
             </div>
 
             <div className="text-white  text-xl font-bold mt-10  ">
-          <button  className=" rounded-md  bg-[#82B440] py-3 px-10 hover:bg-green-600">
+        
+           <button type="submit" className=" rounded-md  bg-[#82B440] py-3 px-10 hover:bg-green-600">
+            <Link to={'/user'}>
             Book now
-          </button>
+            </Link>
+         
+           </button>
+        
           </div>
-            </form> 
+           </form> 
 
            
 
@@ -167,10 +183,17 @@ const CarDetails = () => {
 
        
       </div>
-
+        <ReviewSectionUI/>
    
     </div>
+
+
+    
+
+
   );
 };
 
 export default CarDetails;
+
+

@@ -7,7 +7,7 @@ import { MdAirlineSeatReclineNormal } from "react-icons/md";
 
 const AllRentalCard = ({car}) => {
    
-  console.log("car",car);
+  
   
   return (
     <div className="bg-[#1E2939] text-start p-6 rounded-lg shadow-md mt-5 ">

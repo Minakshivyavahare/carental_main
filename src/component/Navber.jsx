@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoIosArrowDown } from "react-icons/io";
 import { CgMenuGridR } from "react-icons/cg";
 import { IoMdClose } from "react-icons/io";
@@ -6,9 +6,12 @@ import logoimge from '../assets/logo-w1.svg';
 import menuimge from '../assets/menu.svg';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { FaRegUserCircle } from "react-icons/fa";
 import { logOut } from '../features/auth/AuthSlice';
 import {getAllRentalCar} from '../features/rental/RentalSlice'
+import { getAdminRental } from '../features/admin/AdminSlice';
+import { FaUser } from "react-icons/fa";
+
+import { User } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,35 +24,51 @@ const Navbar = () => {
 
   const handleLogout = () => {
     dispatch(logOut())
-    navigate("/")
+
+ 
   }
+  useEffect(() =>{
+    if(!user){
+      navigate("/")
+    }
+  
+  },[user])
 
   const handleRental = () => {
-   dispatch(getAllRentalCar())
-   
-  }
+    dispatch(getAllRentalCar())
+  
+    
+   }
+   const handleRentalAdmin = () => {
+    dispatch(getAdminRental())
+    
+   }
  
 
   return (
-    <nav className='   flex justify-between lg:flex  items-center py-2 px-4 sm:px-6  text-white'>
+    <nav className='   flex justify-between lg:flex  items-center py-2 px-4 sm:px-6  text-white '>
       {/* Logo */}
       <div>
+        {/* <h1>WanderCar</h1> */}
        <Link to={'/'}><img className='  h-10    lg:h-15 sm:h-12  object-cover' src={logoimge} alt="Logo" /></Link> 
       </div>
       
       {/* Desktop Menu */}
-      {/* <ul className='hidden md:hidden  lg:flex  space-x-4  sm:space-x-0 md:space-x-0  lg:space-x-4 xl:space-x-6'>
-        {['Home', 'Vehicles', 'Dealers', 'Shop', 'Contact', 'Dashboard', 'News'].map((item, index) => (
+      <ul className='hidden md:hidden  lg:flex  space-x-4  sm:space-x-0 md:space-x-0  lg:space-x-4 xl:space-x-6'>
+        {['Home','About', 'Services', 'Contact'].map((item, index) => (
           <li key={index} className='flex items-center space-x-1 cursor-pointer hover:text-green-400 text-sm sm:text-base'>
             <span>{item}</span>
-            <IoIosArrowDown />
+           
           </li>
         ))}
-      </ul> */}
+      </ul>
 
 {
  view &&  <ul className='hidden  md:flex  space-x-4  sm:space-x-0 md:space-x-0  lg:space-x-4 xl:space-x-6'>
-   {['Home', 'Vehicles', 'Dealers', 'Shop', 'Contact', 'Dashboard', 'News'].map((item, index) => (
+   {[{ name: 'Home', path: '/' },
+     {name: 'About', path: '/about'},
+     {name: "Service", path: '/service'},
+     {name:"Contact", path:''} ].map((item, index) => (
      <li key={index} className='flex items-center space-x-1 cursor-pointer hover:text-green-400 text-sm sm:text-base'>
        <span>{item}</span>
        <IoIosArrowDown />
@@ -65,10 +84,14 @@ const Navbar = () => {
       {/* Desktop Buttons */}
       <div className='hidden md:flex space-x-2 sm:space-x-4 items-center'>
         {
-          !user ?    (<Link to={'/login'} className='px-3 sm:px-4 py-2 rounded-lg hover:bg-green-400 text-sm sm:text-base'>Login</Link>) 
+          !user ?    (<Link to={'/login'} className='px-1 flex gap-1 sm:px-4 py-2 rounded-lg hover:bg-green-400 text-sm sm:text-base'><User className='m-0 p-0' />Login</Link>) 
           : ( <>
               <div>
-              <button onClick={handleRental}> <Link to={"/user"}><FaRegUserCircle className='text-3xl hover:text-green-400'/></Link></button>
+              {
+                  user.isAdmin ? <button className='px-3  sm:px-4 py-2  rounded-lg hover:bg-green-400 text-sm sm:text-base gap-1' onClick={handleRentalAdmin}> <Link to={"/admin"}  className='flex items-center gap-1'><User className=' text-2xl' />Welcome Admin</Link></button> 
+                  :  (<button className='px-3   sm:px-4 py-2  rounded-lg hover:bg-green-400 text-sm sm:text-base' onClick={handleRental}> <Link to={"/user"} className='flex items-center gap-1'><User className='text-2xl'/>Welcome {user.name}</Link></button>)
+                }
+           
               </div>
               <Link  onClick={handleLogout} className='px-3  sm:px-4 py-2 bg-white text-black rounded-lg hover:bg-green-400 text-sm sm:text-base'>Logout</Link>
             
@@ -78,7 +101,7 @@ const Navbar = () => {
         }
       {/* <Link to={'/register'} className='px-3 sm:px-4 py-2 rounded-lg hover:bg-green-400 text-sm sm:text-base'>Register</Link> */}
       
-        <Link to={'/login'} className='px-3 sm:px-4 py-2 rounded-lg hover:bg-green-400 w-full text-sm sm:text-base'>theme</Link>
+      
         {/* <Link to={'/user'} className='px-3  sm:px-4 py-2 bg-white text-black rounded-lg hover:bg-green-400 text-sm sm:text-base'>User</Link> */}
        
         {/* <Link to={'/admin'} className='px-3  sm:px-4 py-2 bg-white text-black rounded-lg hover:bg-green-400 text-sm sm:text-base'>Admin</Link> */}
@@ -99,7 +122,7 @@ const Navbar = () => {
             <IoMdClose size={24} sm:size={30} />
           </button>
           <ul className='flex flex-col space-y-3 sm:space-y-4'>
-            {['Home', 'Vehicles', 'Dealers', 'Shop', 'Contact', 'Dashboard', 'News'].map((item, index) => (
+            {['Home','About', 'Services', 'Contact'].map((item, index) => (
               <li key={index} className='flex items-center space-x-2 cursor-pointer hover:text-green-400 text-sm sm:text-base'>
                 <span>{item}</span>
                 <IoIosArrowDown />
@@ -108,25 +131,26 @@ const Navbar = () => {
           </ul>
           <div className=' w-full'>
           {
-          !user ?    (<Link to={'/login'} className='px-3 sm:px-4 py-2 rounded-lg hover:bg-green-400 text-sm sm:text-base'>Login</Link>) 
+          !user ?    (<Link to={'/login'} className='px-1 flex gap-1 sm:px-4 py-2 rounded-lg hover:bg-green-400 text-sm sm:text-base'><User className='m-0 p-0' />Login</Link>) 
           : ( <>
               <div>
-              <button onClick={handleRental}> <Link to={"/user"}><FaRegUserCircle className='text-3xl'/></Link></button>
+              {
+                  user.isAdmin ? <button className='px-3  sm:px-4 py-2  rounded-lg hover:bg-green-400 text-sm sm:text-base gap-1' onClick={handleRentalAdmin}> <Link to={"/admin"}  className='flex items-center  gap-1'><User className=' text-2xl' />Admin</Link></button> 
+                  :  (<button className='px-3   sm:px-1 py-2  rounded-lg hover:bg-green-400 text-sm sm:text-base' onClick={handleRental}> <Link to={"/user"} className=' gap-1'><User className='text-2xl'/> {user.name}</Link></button>)
+                }
+           
               </div>
-              <Link onClick={handleLogout} className='px-3  sm:px-4 py-2 bg-white text-black rounded-lg hover:bg-green-400 text-sm sm:text-base'>Logout</Link>
+              <Link  onClick={handleLogout} className='px-3  sm:px-4 py-2  rounded-lg hover:bg-green-400 text-sm sm:text-base'>Logout</Link>
             
               </>
           
            )
         }
-          {/* <Link to={'/register'} className='px-3 sm:px-4 py-2 rounded-lg hover:bg-green-400 text-sm sm:text-base'>Register</Link> */}
+      
          
-          <Link to={'/login'} className='px-3 sm:px-4 py-2 rounded-lg hover:bg-green-400 w-full text-sm sm:text-base'>theme</Link>
-          {/* <Link to={'/user'} className='px-3  sm:px-4 py-2 bg-white text-black rounded-lg hover:bg-green-400 text-sm sm:text-base'>User</Link> */}
-       
-          {/* <Link to={'/admin'} className='px-3  sm:px-4 py-2 bg-white text-black rounded-lg hover:bg-green-400 text-sm sm:text-base'>Admin</Link> */}
-
-          <button className='px-3 mt-1 sm:px-4 py-2 bg-white text-black rounded-lg hover:bg-green-400 w-full text-sm sm:text-base'>theme</button>
+          
+         
+        
 
           </div>
         </div>

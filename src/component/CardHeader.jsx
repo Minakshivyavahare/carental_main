@@ -2,7 +2,8 @@ import React from "react";
 import { FaCircleArrowLeft, FaCircleArrowRight, FaGear } from "react-icons/fa6";
 
 
-const CardHeader = () => {
+const CardHeader = ({car}) => {
+  
   return (
     <>
       <div className="mb-10">

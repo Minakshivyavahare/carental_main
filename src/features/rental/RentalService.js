@@ -7,14 +7,16 @@ const fetchAllRental  = async(token) =>{
         authorization: `Bearer ${token}`
      }
    } 
-  const response = await axios.get("/api/rentals", options)
+  const response = await axios.get("/api/rentals", options)  
   return response.data
   
 }
 
 
+//add new rental car
 const addRentalCar  = async(formData,token) =>{
   const id = formData.carid
+ 
  
 
   const options = {
@@ -27,8 +29,6 @@ const addRentalCar  = async(formData,token) =>{
   params.append('pickupDate', formData.pickupDate1);
  
  const response = await axios.post(`/api/rentals/${id}`,params,  options)
-
- console.log(response.data)
  return response.data
  
 }

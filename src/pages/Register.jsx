@@ -8,6 +8,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../features/auth/AuthSlice";
 import Skeleton from 'react-loading-skeleton'
+import Loader from "../component/Loader";
+
 
 
 const Register = () => {
@@ -41,10 +43,14 @@ const Register = () => {
 
   const handleSubmit = (e) =>{
      e.preventDefault()
-     dispatch(registerUser(formData))
+      dispatch(registerUser(formData))
 
 
   }
+
+  useEffect(()=>{
+        window.scrollTo(0,0)
+        },[])
 
   useEffect(()=> {
 if(user){
@@ -59,7 +65,12 @@ if(isError && message) {
   }, [isError, message, user])
 
   if(isLoading){
-    return Array.from({ length: 1 }).map((_, index) => <Skeleton key={index} height={300} baseColor="#202020" highlightColor="#444" />)
+   
+      return (
+        <div className="bg-gray-900 flex items-center justify-center min-h-screen py-35">
+      <Loader />
+      </div>
+    )
   }
  
 

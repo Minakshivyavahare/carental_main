@@ -4,20 +4,20 @@ import Cards from "../component/Cards";
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllCar } from '../features/AllCar/carSlice';
 import Skeleton from 'react-loading-skeleton'
+import { BookCheck } from 'lucide-react';
 
 const AllCarMain = () => {
   const dispatch = useDispatch();
   const {isLoading, isError,allCar} = useSelector((state) => state.car)
   const [currentPage, setCurrentPage] = useState(1);
 
-  console.log(allCar.pagination);
-  
-  
+ 
   useEffect(() =>{
     dispatch(getAllCar(currentPage))
 
   },[dispatch,currentPage])
 
+ 
 
 
   if(isError){
@@ -30,6 +30,7 @@ const AllCarMain = () => {
   return (
     <>
     <div className="bg-[#171717] h-full w-full p-10 sm:p-28 ">
+    
       <CardHeader />
       <div className="cardContainer gap-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
         {isLoading

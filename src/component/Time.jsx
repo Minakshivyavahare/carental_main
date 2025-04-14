@@ -7,6 +7,7 @@ import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 import { useDispatch } from 'react-redux';
 import { getSearchCar } from '../features/AllCar/carSlice';
 import { useNavigate } from 'react-router-dom';
+import { Search, Car, Calendar, MapPin, TrendingUp, Shield, Fuel, Settings, Star } from 'lucide-react';
 
 
 
@@ -22,9 +23,64 @@ const Time = () => {
     navigate("/search/coinQuery")
 
    }
-  return (
+
+
+   
+
  
-    <div className='flex justify-center w-[100%] items-center p-10 bg-[#313131]'>
+
+
+  return (
+ <>
+
+<div className=" bg-[#313131]">
+      <div className="max-w-6xl mx-auto px-4 py-12">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
+            Find Your Perfect Ride
+          </h1>
+          <p className="text-lg text-gray-400">
+            Luxury vehicles, unbeatable prices, seamless experience
+          </p>
+        </div>
+
+        <div className="relative max-w-3xl mx-auto mb-16">
+          <form onSubmit={handleSubmit} className="relative">
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-6 flex items-center">
+                <Search className="h-6 w-6 text-[#82B440]" />
+              </div>
+              <input
+                type="text"
+                value={text}
+                onChange={(e) =>setText(e.target.value)}
+                className="w-full pl-16 pr-32 py-6 text-xl rounded-2xl
+                         bg-[#191919] text-white placeholder
+                         border-2 border-gray-700
+                         focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20
+                         transition duration-300"
+                placeholder="Search for your dream car..."
+              />
+              <button
+                type="submit"
+                className="absolute right-3 top-1/2 -translate-y-1/2
+                         px-6 py-3 bg-[#82B440] text-white rounded-xl
+                         transition duration-300
+                         shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40
+                         text-lg font-semibold"
+              >
+                Search
+              </button>
+            </div>
+          </form>
+        </div>
+
+       
+      
+      </div>
+    </div>
+    
+    {/* <div className='flex justify-center w-[100%] items-center p-10 bg-[#313131]'>
 <div className='w-[90%] md:w-[80%] flex justify-center items-center h-[auto] bg-[#191919] rounded-xl '>
 <div className='time-box-inside w-[100%] mx-[30px] flex-col flex justify-center items-center  bg-[#191919]'>
    
@@ -53,7 +109,8 @@ const Time = () => {
 
 </div>
 
-    </div>
+    </div> */}
+    </>
   )
 }
 

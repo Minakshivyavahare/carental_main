@@ -31,7 +31,7 @@ const BrandsCarousel = () => {
             >
               <Link to=" " className=" ">
                 <img
-                  className=" bg-[#000000] w-auto h-25 md:w-auto md:h-35  justify-center p-8  rounded-t-3xl rounded-b-3xl "
+                  className=" bg-[#000000] w-auto h-25 md:w-38 md:h-25  justify-center p-8  rounded-t-3xl rounded-b-3xl "
                   src={`brandimages/${brand}.png`}
                   alt="Carento"
                 />

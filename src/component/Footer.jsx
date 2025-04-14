@@ -5,13 +5,13 @@ import FooterCopyright from './FooterCopyright'
 
 const Footer = () => {
   return (
-    <>
-      <footer className="h-auto w-auto bg-[#313131] text-white ">
+
+      <footer className="h-auto w-auto bg-[#313131] text-white">
         <FooterSubscribe />
         <FooterServices />
         <FooterCopyright />
       </footer>
-    </>
+ 
   )
 }
 

@@ -6,13 +6,24 @@ const RentalSlice = createSlice({
 name : "rental",
 initialState : {
     allRental : null,
+    rentalEdit : {edit:{},isEdit: false},
     isLoading:null,
     isSuccess:null,
     isError:null,
     message:""
 
 },
-reducer : {},
+reducer : {
+    
+    updateRental: (state,action)=>{
+        return{
+            ...state,
+            rentalEdit: {edit:action.payload, isEdit:true},
+           
+
+        }
+    }
+},
 
 extraReducers :(builder) => {
 
@@ -43,6 +54,7 @@ extraReducers :(builder) => {
 })
 
 
+export const {updateRental} = RentalSlice.actions
 export default RentalSlice.reducer
 
 
@@ -65,13 +77,14 @@ export const getAllRentalCar = createAsyncThunk("GET/RENTALS", async(_,thunkAPI)
 
 //Create all rental car
 export const createRentalCar = createAsyncThunk("FETCH/RENTALS", async(formData,thunkAPI) => {
-    
+
     let token = thunkAPI.getState().auth.user.token
    
     
     
     try {
         return await RentalService.addRentalCar(formData,token)
+        
     } catch (error) {
         const message = error.response.data.message
         return thunkAPI.rejectWithValue(message)

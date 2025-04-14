@@ -12,7 +12,18 @@ const carSlice = createSlice({
         isError:false,
         message:""
     },
-    reducers: {},
+    reducers: {
+        rentalcarremove: (state, action) => {
+            return {
+              ...state,
+              allCar: {
+                ...state.allCar,
+                cars: state.allCar.cars.filter((item) => item._id !== action.payload),
+              },
+            };
+          },
+
+    },
     extraReducers: (builder) => {
       
         builder
@@ -78,6 +89,7 @@ const carSlice = createSlice({
     }
 })
 
+export const {rentalcarremove}=carSlice.actions
 export default carSlice.reducer
 
 

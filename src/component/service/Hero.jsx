@@ -1,11 +1,11 @@
 import { FaChevronRight } from "react-icons/fa";
- import hero from "../../assets/service/hero.jpg";
+
 
 const Hero = () => {
   return (
     <section className="relative flex flex-col items-center justify-center py-20  sm:px-8 lg:px-16">
       <img
-        src={hero}
+        src=""
         alt="Hero Background"
         className="object-cover rounded-xl brightness-85 h-50 md:h-auto"
       />

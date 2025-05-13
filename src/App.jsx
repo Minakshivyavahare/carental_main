@@ -15,9 +15,14 @@ import AdminDashboard from './pages/AdminDashboard'
 import AdminUsertable from './pages/AdminUsertable'
 import UserRentalDetail from './pages/UserRentalDetail'
 import AddNewrental from './pages/AddNewrental'
-import Adminallrental5 from './component/admin_component/Adminallrental5'
+import Adminallrental from './component/admin_component/Adminallrental'
 
  import { Link } from 'react-router-dom';
+import Service from './pages/Service'
+import About from './pages/About'
+import PageNotFound from './pages/PageNotFound'
+import TermsCondition from './pages/TermsCondition'
+import { ToastContainer } from 'react-toastify';
 
  
  
@@ -34,29 +39,35 @@ const App = () => {
 
        
           <Route path='/' element={ <Home/>} />
-         
+          <Route path="*" element={<PageNotFound/>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         
-         <Route path='/admin' element={ <AdminDashboard/>} />
+        
         <Route path='/cardetail/:carid' element={ <CarDetails/>} />
-        <Route path="/user" element={<UserDasboard/>} />
-        <Route path="/useraddcar" element={<UserAddCar/>} />
         <Route path="/search/:carQuery" element={<SearchCar/>} />
         
-        <Route path="" element={<PrivateComponent />} />
-        <Route path="/adminusertable" element={<AdminUsertable/>} />
-        <Route path="/userrentaldetail" element={<UserRentalDetail/>} />
-        <Route path="/adminaddnewcar" element={<AddNewrental/>} />
-        <Route path="/Adminallrental5" element={<Adminallrental5/>} />
+      
+      
+        <Route path="/service" element={<Service/>} />
+        <Route path="/about" element={<About/>} />
+        <Route path="/term" element={<TermsCondition/>} />
       
      
-  
+        <Route path="/" element={<PrivateComponent />}>
+        <Route path="user" element={<UserDasboard/>} />
+        <Route path='admin' element={ <AdminDashboard/>} />
+        <Route path="adminusertable" element={<AdminUsertable/>} />
+        <Route path="userrentaldetail" element={<UserRentalDetail/>} />
+        <Route path="adminaddnewcar" element={<AddNewrental/>} />
+        <Route path="Adminallrental" element={<Adminallrental/>} />
+        <Route path="useraddcar" element={<UserAddCar/>} />
+        </Route>
       
       </Routes>
      
       <Footer/>
-    
+      <ToastContainer />
     </Router>
     
    

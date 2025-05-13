@@ -18,7 +18,7 @@ const SearchCar = () => {
    
     
   return (
-     <div className='bg-[#171717] grid grid-cols-1 gap-7 w-full h-full p-30 md:grid-cols-2 xl:grid-cols-3'>
+     <div className='bg-[#171717] grid grid-cols-1 gap-7 w-full h-full p-20 md:grid-cols-2 xl:grid-cols-3'>
       {
         isLoading ? Array.from({length : 6}).map((_,index) => <Skeleton key={index} height={50} baseColor="#202020" highlightColor="#444"/>)
         :

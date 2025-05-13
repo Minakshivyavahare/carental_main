@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../features/auth/AuthSlice";
 import Skeleton from 'react-loading-skeleton'
 import Loader from "../component/Loader";
+import { toast } from "react-toastify";
 
 
 const Login = () => {
@@ -50,7 +51,11 @@ if(user){
   navigate('/')
 }
 if(isError && message){
-  console.log("Erro message is Found  in login");
+  toast.error(message, {
+    position: "top-right",
+    theme: "dark",
+    
+    });
   
 }
 

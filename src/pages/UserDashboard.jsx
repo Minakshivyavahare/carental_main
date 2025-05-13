@@ -4,16 +4,26 @@ import { Link } from "react-router-dom";
 import AllCarMain from "../component/AllCarMain";
 
 import AllRentalCard from "../component/AllRentalCard";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logOut } from "../features/auth/AuthSlice";
 
 
 const Dashboard = () => {
   const allRentals = useSelector((state) => state.rental);
 
+ 
+  const user = useSelector((state) => state.auth)
+  const dispatch = useDispatch()
+
+   const handleLogout = () => {
+      dispatch(logOut())
+  
+   
+    }
 
  
   return (
-    <div className="w-full  sm:w-full md:flex h-full bg-[#101828] text-white pt-30">
+    <div className="w-full   sm:w-full md:flex max-h-full bg-[#101828] text-white pt-10">
       {/* Sidebar */}
       <div className="w-full flex p-4 shadow-md items-center justify-between md:justify-start md:flex-col md:w-1/4 md:p-4 sm:flex sm:flex-row sm:w-full">
         <div className=" text-centers sm:text-center md:text-center md:mb-3 ">
@@ -24,11 +34,11 @@ const Dashboard = () => {
           />
           <div className="">
             <h2 className="text-[8px] md:text-lg font-semibold sm:text-[10px]">
-              John Smith
+              {user?.user?.name}
             </h2>
 
             <p className="text-[7px] text-center md:text-sm text-white  md:block">
-              CEO, Oxish
+            {user?.user?.email}
             </p>
           </div>
         </div>
@@ -60,11 +70,18 @@ const Dashboard = () => {
             <MenuItem>
               <Link
                 to={"/useraddcar"}
+               
                 className="block px-4 py-2 mb-2 shadow-lg rounded-sm text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
               >
-                Add Cars for rentals
+                 view and update rentals
               </Link>
             </MenuItem>
+
+           
+
+            
+
+            
 
            
 
@@ -78,54 +95,53 @@ const Dashboard = () => {
            
 
             <MenuItem>
-              <a
-                href="#"
+              <Link
+                to={"/logout"}
+                onClick={() => handleLogout()}
                 className="block px-4 py-2 text-sm shadow-lg rounded-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
               >
                 Logout
-              </a>
+              </Link>
             </MenuItem>
           </MenuItems>
         </Menu>
         <nav className="md:mt-5 md:justify-evenly hidden md:block w-full flex-row sm:items-center sm:w-full">
           <a
             href="#"
-            className="sm:w-auto block text-center md:text-start md:text-blue-600 md:h-9 md:justify-center md:mb-3 font-semibold bg-[#1E2939] text-white md:text-lg  md:pl-2 shadow-lg md:shadow-lg  md:rounded-sm"
+            className="sm:w-auto block text-center md:text-start md:text-white md:h-9 md:justify-center md:mb-3 font-semibold bg-[#1E2939] text-white md:text-lg  md:pl-2 shadow-lg md:shadow-lg  md:rounded-sm"
           >
             Dashboard
           </a>
           <Link
             to={"/useraddcar"}
-            className="sm:w-auto block text-center md:text-start md:text-blue-600 md:h-9 md:mb-3 font-semibold bg-[#1E2939] text-white  text-[13px] md:text-lg  md:pl-2 shadow-lg md:shadow-lg rounded-lg md:rounded-ss-none"
+            className="sm:w-auto block text-center md:text-start md:text-white md:h-9 md:mb-3 font-semibold bg-[#1E2939] text-white  text-[13px] md:text-lg  md:pl-2 shadow-lg md:shadow-lg rounded-lg md:rounded-ss-none"
           >
-            Add Cars for rentals
+            view and update rentals
           </Link>
-          <a
-            href="#"
-            className="sm:w-auto block text-center md:text-start md:text-blue-600 md:h-9 md:justify-center md:mb-3 font-semibold bg-[#1E2939]  text-white md:text-lg md:pl-2 shadow-lg md:shadow-lg  md:rounded-sm"
+          <Link
+            to={"/useraddcar"}
+            className="sm:w-auto block text-center md:text-start md:text-white md:h-9 md:justify-center md:mb-3 font-semibold bg-[#1E2939]  text-white md:text-lg md:pl-2 shadow-lg md:shadow-lg  md:rounded-sm"
           >
             Transactions
-          </a>
-          <a
-            href="#"
-            className="sm:w-auto block text-center md:text-start md:text-blue-600 md:h-9 md:justify-center md:mb-3 font-semibold text-white md:text-lg bg-[#1E2939] md:pl-2 shadow-lg md:shadow-lg  md:rounded-sm"
-          >
-            Fuel Type
-          </a>
-
-          <a
-            href="#"
-            className="sm:w-auto block text-center md:text-start md:text-blue-600 md:h-9 md:justify-center md:mb-3 font-semibold  text-white md:text-lg bg-[#1E2939] md:pl-2 shadow-lg md:shadow-lg  md:rounded-sm"
-          >
-            Car-Brands
-          </a>
+          </Link>
+         
+         
+              <Link
+                to={"/logout"}
+                onClick={() => handleLogout()}
+               className="sm:w-auto block text-center md:text-start md:text-white md:h-9 md:justify-center md:mb-3 font-semibold bg-[#1E2939]  text-white md:text-lg md:pl-2 shadow-lg md:shadow-lg  md:rounded-sm"
+              >
+                Logout
+              </Link>
+           
+         
         </nav>
       </div>
 
       {/* Main Content */}
       <div className="p-4 md:p-7 md:w-full">
         <div className="mb-2 md:flex md:justify-between h-auto">
-          <h1 className="text-[15px] sm:text-[25px] text-center text-2xl font-bold md:text-start md:text-5xl font-serif">
+          <h1 className="text-[15px] sm:text-[25px] text-center text-2xl font-bold md:text-start md:text-3xl font-serif">
             Dashboard
           </h1>
         

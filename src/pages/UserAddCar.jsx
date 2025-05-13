@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
 import DatePicker from "react-datepicker";
@@ -7,21 +7,18 @@ import { BsFillFuelPumpFill } from "react-icons/bs";
 import { FaCircleArrowLeft, FaCircleArrowRight, FaGear } from "react-icons/fa6";
 import { IoLocationSharp, IoSpeedometerSharp } from "react-icons/io5";
 import { MdAirlineSeatReclineNormal } from "react-icons/md";
-import Swal from "sweetalert2";
-import { updateRental } from "../features/rental/RentalSlice";
 
+
+import Modal from "../component/Modal";
+import { editData } from "../features/rental/RentalSlice";
 
 
 const UserAddCar = () => {
-   const [pickupDate, setPickupDate] = useState(new Date());
-   const [dropDate, setDropDate] = useState(new Date());
+  
    const [showModal,setShowModal] = useState(false)
   const dispatch = useDispatch()
 
   const allRental = useSelector((state) => state.rental);
-
-  // console.log("allrental user add car",allRental.allRental[0].totalBill)
-
   const filtered = allRental?.allRental?.filter((rental) => rental.car !== null)?.map((rental) =>({
     totalBill: rental.totalBill
   }))
@@ -29,37 +26,39 @@ const UserAddCar = () => {
  const total = filtered?.reduce((p,c) => p + c.totalBill,0)
 
  
-
-const handleUpdate = (rental) => {
-
  
   
-//  Swal.fire({
-//   title: 'Select Dates',
-//   html: `
-//     <div class="text-left">
-//       <label for="pickup" style="">Pickup Date</label>
-//       <input type="date" value={rental.pickupDate} id="pickup" class="swal2-input" style="width:50%; padding:8px; border:1px solid #ccc; border-radius:6px;" /> <br/>
 
-//       <label for="pickup" style="padding:8px">Drop Date</label>
-//       <input type="date" value={rental.pickupDate}  id="pickup" class="swal2-input" style="width:50%; padding:8px; border:1px solid #ccc; border-radius:6px;" />
-     
-//   `,
-//   confirmButtonText: 'Submit'
+const handleCloseModal = () => {
+  setShowModal(false);
+};
 
-//  })
+const handleUpdate = (rental) => {
+ 
+   const {_id,pickupDate, dropDate } = rental;
+//  const pickupDate1 = `${new Date(pickupDate).getDate()}/${new Date(pickupDate).getMonth() + 1}/${new Date(pickupDate).getFullYear()}`;
+//  const dropDate1 = `${new Date(dropDate).getDate()}/${new Date(dropDate).getMonth() + 1}/${new Date(dropDate).getFullYear()}`;
+
+  setShowModal(true)
+  dispatch(editData({ id:_id,pickupDate, dropDate}))
  
 }
 
 
-
-
   return (
+    
     <div className="bg-black py-20">
       <div className="bg-[#191919] py-5 px-10 rounded-md shadow-[0 2px 7px 0 rgba(0,0,0,.07)] mx-30 my-5">
         <div className="py-5">
           <h3 className="text-white font-bold text-xl">Rental Cars</h3>
         </div>
+        
+        
+          {
+            showModal && <><Modal onClose={handleCloseModal}/></>
+          }
+       
+        
            
 
         {
@@ -80,8 +79,12 @@ const handleUpdate = (rental) => {
                 <p className="text-sm text-gray-300">Total Bill: ₹ {rental?.totalBill}</p>
               </div>
               <div className="text-right">
+              <p className="text-sm text-gray-300">drop Date</p>
+                <p className="text-sm text-gray-300">{new Date(rental?.dropDate)?.toLocaleDateString('en-IN')}</p>
+                <p className="text-sm text-gray-300">pickup Date</p>
+                <p className="text-sm text-gray-300">{new Date(rental?.pickupDate)?.toLocaleDateString('en-IN')}</p>
                 <h3 className="text-xl font-bold text-white">₹ {rental?.car?.rate}</h3>
-                <button onClick={() => handleUpdate(rental)} className="mt-2 px-4 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600">Update</button>
+                <button onClick={() => handleUpdate(rental)} className="mt-2 px-4 py-1 bg-[#82B440] text-white rounded-lg hover:bg-green-700">Update</button>
               </div>
                 </div>
       
@@ -89,6 +92,8 @@ const handleUpdate = (rental) => {
           ) :(
             <p className="py-4 text-white">No Rentals Found</p>
           )
+
+        
 
         }   
 
@@ -121,9 +126,7 @@ const handleUpdate = (rental) => {
         </div>
 
         <div className="text-white  text-xl font-bold mt-10 text-center  ">
-          <button className=" rounded-md  bg-[#82B440] py-3 px-10 ">
-            Book now
-          </button>
+          
          
         </div>
       </div>

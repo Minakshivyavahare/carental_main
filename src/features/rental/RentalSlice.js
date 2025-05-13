@@ -6,22 +6,26 @@ const RentalSlice = createSlice({
 name : "rental",
 initialState : {
     allRental : null,
-    rentalEdit : {edit:{},isEdit: false},
     isLoading:null,
     isSuccess:null,
     isError:null,
-    message:""
+
+    message:"",
+    edit: {
+        editcar: {},
+        isEdit: false,
+      },
 
 },
-reducer : {
+reducers : {
     
-    updateRental: (state,action)=>{
-        return{
-            ...state,
-            rentalEdit: {edit:action.payload, isEdit:true},
-           
+    editData: (state,action)=>{
 
-        }
+        state.edit.editcar = action.payload;
+      state.edit.isEdit = true;
+    },
+    updateCar: (state,action) => {
+        
     }
 },
 
@@ -54,7 +58,7 @@ extraReducers :(builder) => {
 })
 
 
-export const {updateRental} = RentalSlice.actions
+export const {editData} = RentalSlice.actions
 export default RentalSlice.reducer
 
 
@@ -77,13 +81,31 @@ export const getAllRentalCar = createAsyncThunk("GET/RENTALS", async(_,thunkAPI)
 
 //Create all rental car
 export const createRentalCar = createAsyncThunk("FETCH/RENTALS", async(formData,thunkAPI) => {
-
+   console.log("1s", formData)
     let token = thunkAPI.getState().auth.user.token
    
     
     
     try {
         return await RentalService.addRentalCar(formData,token)
+        
+    } catch (error) {
+        const message = error.response.data.message
+        return thunkAPI.rejectWithValue(message)
+        
+    }
+})
+
+
+//update  rental car
+export const update = createAsyncThunk("UPDATE/RENTALS", async(updatedRental,thunkAPI) => {
+ 
+    let token = thunkAPI.getState().auth.user.token
+   
+    
+    
+    try {
+        return await RentalService.updateRental(updatedRental,token)
         
     } catch (error) {
         const message = error.response.data.message

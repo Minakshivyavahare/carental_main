@@ -10,7 +10,7 @@ const PrivateComponent = () => {
     }
 
 
-  return isLoggedIn ? <Outlet/> : <Navigate to=""/>
+  return isLoggedIn ? <Outlet/> : <Navigate to="/login"/>
 }
 
 export default PrivateComponent

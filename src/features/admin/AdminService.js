@@ -24,35 +24,46 @@ const FetchAllrental = async(token) => {
 ///create new car service 
 
 const AddNewcar=async(FormData,token)=>{
+   
     const options = {
         headers: {
             authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data"
             
         }
     };
- 
-
-        const response = await axios.post('/api/admin/car', FormData, options);
- return response.data
-
-
-
+      try {
+        const response = await axios.post('/api/admin/car', FormData.formData, options);
+        return response.data
+      } catch (error) {
+        console.log(error.mesage)
+        throw new error
+      }
 }
 
 
 
 //cara rental updata 
 
-
-const updatarental=async(updataFormData,token)=>{
-    const options = {
+const updatarental = async ({formData: data,id}, token) => {
+  console.log("formData", data)
+  console.log(id)
+  try {
+    const response = await axios.put(`/api/admin/car/${id}`, data, {
         headers: {
             authorization: `Bearer ${token}`,
-        }
-    };
-    const response =await axios.put(`/api/admin/car/${ updataFormData._id}`,updataFormData, options)
-   return response.data
-}
+            // "Content-Type": "multipart/form-data",
+        },
+    });
+    return response.data;
+    
+  } catch (error) {
+    console.log('error', error)
+     throw new error
+  }
+   
+};
+
 
 
 
@@ -69,16 +80,6 @@ const deleterental=async(id,token)=>{
     const response =await axios.delete(`/api/admin/car/${id}`, options)
    console.log( response.data)
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

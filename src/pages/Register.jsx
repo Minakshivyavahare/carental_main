@@ -9,13 +9,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../features/auth/AuthSlice";
 import Skeleton from 'react-loading-skeleton'
 import Loader from "../component/Loader";
+import { toast } from "react-toastify";
 
 
 
 const Register = () => {
 
   const {user, isLoading, isError , message} = useSelector(state => state.auth)
-  // console.log(user);
+ 
   
 
   const dispatch = useDispatch()
@@ -57,7 +58,11 @@ if(user){
   navigate("/")
 }
 if(isError && message) {
-  console.log("Error is found in Register");
+  toast.error(message, {
+     position: "top-right",
+     theme: "dark",
+     
+     });
   
 }
    

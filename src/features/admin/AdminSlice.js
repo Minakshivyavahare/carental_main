@@ -1,4 +1,4 @@
-import { asyncThunkCreator, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import AdminService from "./AdminService";
 
 
@@ -9,7 +9,7 @@ initialState : {
     adminrental : null,
     Creatcar:null,
     
-    AdminEdit:{adimiEdit:{},isedit:false},
+    AdminEdit:{edit:{},isedit:false},
     Updatecar:null,
     isLoading : false,
     isSuccess : false,
@@ -22,9 +22,16 @@ reducers : {
     Adminedit: (state, action) => {
         return {
           ...state,
-          AdminEdit: { adimiEdit: action.payload, isedit: true },
+          AdminEdit: { edit: action.payload, isedit: true },
         };
       },
+       reset: (state, action) => {
+            return{
+                ...state,
+                AdminEdit : {edit : {}, isedit : false}
+            }
+        }
+
 },
 
 extraReducers : (builder) => {
@@ -77,22 +84,22 @@ extraReducers : (builder) => {
 
 //updata  single rental car
 .addCase(Updaterental.pending, (state, action) => {
-    state.isLoading = true,
-    state.isSuccess = false,
-    state.isError = false
+    state.isLoading = true;
+    state.isSuccess = false;
+    state.isError = false;
 })
 .addCase(Updaterental.fulfilled, (state, action) => {
   
-    state.isLoading = false,
-    state.isSuccess = true,
-    state.isError = false
-    state.Updatecar = action.payload
+    state.isLoading = false;
+    state.isSuccess = true;
+    state.isError = false;
+    state.Updatecar = action.payload;
 })
 .addCase(Updaterental.rejected, (state, action) => {
-    state.isLoading = false,
-    state.isSuccess = false,
-    state.isError = true
-    state.Creatcar = null,
+    state.isLoading = false;
+    state.isSuccess = false;
+    state.isError = true;
+    state.Creatcar = null;
     state.messsage = action.payload
 })
 
@@ -125,7 +132,7 @@ extraReducers : (builder) => {
 
 })
 
-export const {Adminedit}=AdminSlice.actions
+export const {Adminedit, reset}=AdminSlice.actions
 export default AdminSlice.reducer
 
 export const getAdminRental = createAsyncThunk("GET/adminRENTAL", async( _, thunkAPI)=> {
@@ -149,6 +156,7 @@ export const getAdminRental = createAsyncThunk("GET/adminRENTAL", async( _, thun
 
 
 export const  CreateRentalcar=createAsyncThunk('CREATE/CARRENTAL',async(FormData,thunkAPI)=>{
+  
     const token =  thunkAPI.getState().auth.user.token
     try {
 return await AdminService.AddNewcar(FormData,token)
@@ -162,15 +170,31 @@ return await AdminService.AddNewcar(FormData,token)
 
  // admin updata cara rental
 
- export const Updaterental=createAsyncThunk('UPDATA/RENTAL',async(updataFormData,thunkAPI)=>{
-    const token =  thunkAPI.getState().auth.user.token
-try {
-    return await AdminService.updatarental(updataFormData,token)
-} catch (error) {
-    const message = error.response.data.message
-    thunkAPI.rejectWithValue(message)
-}
- })
+ export const Updaterental = createAsyncThunk(
+  'UPDATA/RENTAL',
+  async ({formData,id}, thunkAPI) => {
+    const token = thunkAPI.getState().auth.user.token;
+   
+    try {
+      return await AdminService.updatarental({formData,id}, token);
+    } catch (error) {
+      const message = error.response?.data?.message || error.message || "Something went wrong";
+      return thunkAPI.rejectWithValue(message); // triggers rejected action
+    }
+  }
+);
+
+//  export const Updaterental=createAsyncThunk('UPDATA/RENTAL',async({formData,id},thunkAPI)=>{
+   
+//     const token =  thunkAPI.getState().auth.user.token
+
+// try {
+//     return await AdminService.updatarental({formData,id},token)
+// } catch (error) {
+//     const message = error.response.data.message
+//     return thunkAPI.rejectWithValue(message)
+// }
+//  })
 
 
 
@@ -182,7 +206,7 @@ try {
     return await AdminService.deleterental(id,token)
 } catch (error) {
     const message = error.response.data.message
-    thunkAPI.rejectWithValue(message)
+    return thunkAPI.rejectWithValue(message)
 }
  })
 

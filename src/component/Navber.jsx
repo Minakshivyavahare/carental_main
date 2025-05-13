@@ -4,7 +4,7 @@ import { CgMenuGridR } from "react-icons/cg";
 import { IoMdClose } from "react-icons/io";
 import logoimge from '../assets/logo-w1.svg';
 import menuimge from '../assets/menu.svg';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../features/auth/AuthSlice';
 import {getAllRentalCar} from '../features/rental/RentalSlice'
@@ -18,7 +18,9 @@ const Navbar = () => {
   const {user} = useSelector((state) => state.auth)
   const dispatch = useDispatch()
   const navigate = useNavigate()
- 
+
+
+
 
   const [view,setview]=useState(false)
 
@@ -44,7 +46,7 @@ const Navbar = () => {
     
    }
  
-
+ 
   return (
     <nav className='   flex justify-between lg:flex  items-center py-2 px-4 sm:px-6  text-white '>
       {/* Logo */}
@@ -55,23 +57,32 @@ const Navbar = () => {
       
       {/* Desktop Menu */}
       <ul className='hidden md:hidden  lg:flex  space-x-4  sm:space-x-0 md:space-x-0  lg:space-x-4 xl:space-x-6'>
-        {['Home','About', 'Services', 'Contact'].map((item, index) => (
-          <li key={index} className='flex items-center space-x-1 cursor-pointer hover:text-green-400 text-sm sm:text-base'>
-            <span>{item}</span>
+        {[
+          {name:"Home", path: '/'},
+          {name:"About", path: '/about'},
+          {name:"Services", path: '/service'},
+         
+          {name:"Terms & Conditions", path: '/term'},
+         
+        ].map((item, index) => (
+          <li key={index} className='flex items-center space-x-1 cursor-pointer hover:text-green-400 text-white font-bold text-sm sm:text-base'>
+            <Link to={item.path}>{item.name}</Link>
            
           </li>
         ))}
       </ul>
 
 {
- view &&  <ul className='hidden  md:flex  space-x-4  sm:space-x-0 md:space-x-0  lg:space-x-4 xl:space-x-6'>
+ view &&  <ul className='hidden  md:flex  space-x-4  sm:space-x-0 md:space-x-0  lg:space-x-4 xl:space-x-6 gap-4' >
    {[{ name: 'Home', path: '/' },
      {name: 'About', path: '/about'},
      {name: "Service", path: '/service'},
-     {name:"Contact", path:''} ].map((item, index) => (
+     {name:"Terms & Conditions", path: '/term'},
+    
+     ].map((item, index) => (
      <li key={index} className='flex items-center space-x-1 cursor-pointer hover:text-green-400 text-sm sm:text-base'>
-       <span>{item}</span>
-       <IoIosArrowDown />
+       <Link to={item.path}>{item.name}</Link>
+       
      </li>
    ))}
  </ul>
@@ -88,23 +99,18 @@ const Navbar = () => {
           : ( <>
               <div>
               {
-                  user.isAdmin ? <button className='px-3  sm:px-4 py-2  rounded-lg hover:bg-green-400 text-sm sm:text-base gap-1' onClick={handleRentalAdmin}> <Link to={"/admin"}  className='flex items-center gap-1'><User className=' text-2xl' />Welcome Admin</Link></button> 
+                  user.isAdmin ? <button className='px-3  sm:px-4 py-2  rounded-lg hover:bg-green-400 text-sm sm:text-base gap-1' onClick={handleRentalAdmin}> <Link to={"/admin"}  className='flex items-center gap-1 text-white font-bold'><User className='font-bold text-2xl ' />Welcome Admin</Link></button> 
                   :  (<button className='px-3   sm:px-4 py-2  rounded-lg hover:bg-green-400 text-sm sm:text-base' onClick={handleRental}> <Link to={"/user"} className='flex items-center gap-1'><User className='text-2xl'/>Welcome {user.name}</Link></button>)
                 }
            
               </div>
-              <Link  onClick={handleLogout} className='px-3  sm:px-4 py-2 bg-white text-black rounded-lg hover:bg-green-400 text-sm sm:text-base'>Logout</Link>
+              <Link  onClick={handleLogout} className='px-3  sm:px-4 py-2 bg-white text-black rounded-lg hover:bg-green-400  font-semibold text-sm sm:text-base'>Logout</Link>
             
               </>
           
            )
         }
-      {/* <Link to={'/register'} className='px-3 sm:px-4 py-2 rounded-lg hover:bg-green-400 text-sm sm:text-base'>Register</Link> */}
-      
-      
-        {/* <Link to={'/user'} className='px-3  sm:px-4 py-2 bg-white text-black rounded-lg hover:bg-green-400 text-sm sm:text-base'>User</Link> */}
-       
-        {/* <Link to={'/admin'} className='px-3  sm:px-4 py-2 bg-white text-black rounded-lg hover:bg-green-400 text-sm sm:text-base'>Admin</Link> */}
+     
         <button onClick={()=>setview(view ? false : true)} className=' bg-green-400 lg:hidden rounded-xl ' ><img className='   py-3 bg-green-400  rounded-xl px-3 hover:bg-white  transition-all duration-300' src={menuimge} alt="" /></button>
 
         
@@ -122,10 +128,15 @@ const Navbar = () => {
             <IoMdClose size={24} sm:size={30} />
           </button>
           <ul className='flex flex-col space-y-3 sm:space-y-4'>
-            {['Home','About', 'Services', 'Contact'].map((item, index) => (
+            {[
+              {name:'Home', path:"/"},
+              {name:'About', path:"/about"},
+              {name:'Service', path:"/service"},
+              {name:"Terms & Conditions", path: '/term'},
+             ].map((item, index) => (
               <li key={index} className='flex items-center space-x-2 cursor-pointer hover:text-green-400 text-sm sm:text-base'>
-                <span>{item}</span>
-                <IoIosArrowDown />
+                 <Link to={item.path}>{item.name}</Link>
+              
               </li>
             ))}
           </ul>
@@ -135,12 +146,12 @@ const Navbar = () => {
           : ( <>
               <div>
               {
-                  user.isAdmin ? <button className='px-3  sm:px-4 py-2  rounded-lg hover:bg-green-400 text-sm sm:text-base gap-1' onClick={handleRentalAdmin}> <Link to={"/admin"}  className='flex items-center  gap-1'><User className=' text-2xl' />Admin</Link></button> 
+                  user.isAdmin ? <button className='px-3  sm:px-4 py-1  rounded-lg hover:bg-green-400 text-sm sm:text-base gap-1' onClick={handleRentalAdmin}> <Link to={"/admin"}  className='flex items-center  gap-1'><User className=' text-2xl' />Admin</Link></button> 
                   :  (<button className='px-3   sm:px-1 py-2  rounded-lg hover:bg-green-400 text-sm sm:text-base' onClick={handleRental}> <Link to={"/user"} className=' gap-1'><User className='text-2xl'/> {user.name}</Link></button>)
                 }
            
               </div>
-              <Link  onClick={handleLogout} className='px-3  sm:px-4 py-2  rounded-lg hover:bg-green-400 text-sm sm:text-base'>Logout</Link>
+              <Link  onClick={handleLogout} className='px-3  sm:px-1 py-2  rounded-lg hover:bg-green-400 text-sm sm:text-base'>Logout</Link>
             
               </>
           

@@ -74,7 +74,7 @@ if(isLoading){
         All Users Data
       </Link>
       <Link
-        to="/Adminallrental5"
+        to="/Adminallrental"
         className="block w-full px-4 py-3 bg-[#262626] text-white rounded hover:bg-blue-600 transition"
       >
         All Rental Cars

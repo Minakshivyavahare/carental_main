@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 // import { getAllCar } from '../features/AllCar/carSlice';
 import Skeleton from 'react-loading-skeleton'
-import AdminCars from './AdminCars';
+import Admincars from './Admincars'
 import CardHeader from '../CardHeader';
 import { getAllCar } from '../../features/AllCar/carSlice';
 
@@ -40,7 +40,7 @@ const Adminallrental = () => {
     <div className="cardContainer gap-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
       {isLoading
         ? Array.from({ length: 9 }).map((_, index) => <Skeleton key={index} height={50} baseColor="#202020" highlightColor="#444" />)
-        : allCar?.cars?.map((car) => <AdminCars car={car} key={car._id} />)}
+        : allCar?.cars?.map((car) => <Admincars car={car} key={car._id} />)}
     </div>
     <button
     disabled= {currentPage ===1}

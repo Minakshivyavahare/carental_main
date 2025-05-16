@@ -1,5 +1,6 @@
 import axios from "axios";
 
+const base_url = "https://car-rental-app-5d25.onrender.com"
 
 const fetchAllRental  = async(token) =>{
    const options = {
@@ -7,7 +8,7 @@ const fetchAllRental  = async(token) =>{
         authorization: `Bearer ${token}`
      }
    } 
-  const response = await axios.get("/api/rentals", options)  
+  const response = await axios.get(base_url + "/api/rentals", options)  
   return response.data
   
 }
@@ -29,7 +30,7 @@ const addRentalCar  = async(formData,token) =>{
   params.append('dropDate', formData.dropDate1);
   params.append('pickupDate', formData.pickupDate1);
  
- const response = await axios.post(`/api/rentals/${id}`,params,  options)
+ const response = await axios.post(base_url + `/api/rentals/${id}`,params,  options)
 
  return response.data
  
@@ -47,7 +48,7 @@ const updateRental = async(updatedRental,token) => {
     }
   } 
 
-  const response = await axios.put(`/api/rentals/${id}`,{pickupDate, dropDate},options)
+  const response = await axios.put(base_url + `/api/rentals/${id}`,{pickupDate, dropDate},options)
  console.log("myyyyyyyyyy", response.data)
   return response.data
 

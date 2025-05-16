@@ -20,7 +20,7 @@ const fetchSingleCar = async(id) => {
 }
 
 const searchCar = async(searchTerm) => {
-    const response = await axios.get(`/api/car/search?query=${searchTerm}`)
+    const response = await axios.get(base_url + `/api/car/search?query=${searchTerm}`)
 
     console.log("search",response.data);
     
